@@ -1,0 +1,185 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg: #1A2B3C;
+  --text: #EEEBD3;
+  --accent: #a8a8b0;
+  --font: "IBM Plex Sans", system-ui, sans-serif;
+  --chunk-size: clamp(1.35rem, 3.2vw, 2rem);
+  --line-height: 1.45;
+  --feed-gap: 1.1rem;
+  --visible-lines: 9;
+}
+
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: var(--font);
+  font-weight: 300;
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+}
+
+.viewport {
+  position: relative;
+  z-index: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 2rem 1.5rem 5rem;
+}
+
+.feed-scroller {
+  width: min(42rem, 100%);
+  min-height: calc(
+    var(--chunk-size) * var(--line-height) * 5 + var(--feed-gap) * 4
+  );
+  max-height: min(
+    85vh,
+    calc(
+      var(--chunk-size) * var(--line-height) * var(--visible-lines) +
+        var(--feed-gap) * (var(--visible-lines) - 1)
+    )
+  );
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  overflow-y: auto;
+  cursor: grab;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.feed-scroller::-webkit-scrollbar {
+  display: none;
+}
+
+.feed-scroller.is-grabbing {
+  cursor: grabbing;
+  user-select: none;
+}
+
+.feed {
+  display: flex;
+  flex-direction: column;
+  gap: var(--feed-gap);
+  width: 100%;
+  margin-top: auto;
+  flex-shrink: 0;
+}
+
+.chunk {
+  font-size: var(--chunk-size);
+  line-height: var(--line-height);
+  letter-spacing: -0.01em;
+  overflow-wrap: break-word;
+  opacity: 0;
+  transform: translateY(1.25rem);
+  transition:
+    opacity 0.7s ease,
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+.chunk.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.chunk.faded {
+  opacity: 0.65;
+}
+
+.chunk.more-faded {
+  opacity: 0.4;
+}
+
+.chunk.oldest {
+  opacity: 0.2;
+}
+
+.chunk a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: rgba(238, 235, 211, 0.45);
+  text-underline-offset: 0.15em;
+}
+
+.chunk a:hover {
+  text-decoration-color: currentColor;
+}
+
+.chunk.done .text-reveal {
+  clip-path: inset(0 0 0 0);
+  opacity: 1;
+}
+
+.text-reveal {
+  display: block;
+  clip-path: inset(0 100% 0 0);
+}
+
+.controls {
+  position: fixed;
+  bottom: 1.25rem;
+  right: 1.25rem;
+  z-index: 2;
+  display: flex;
+  gap: 0.5rem;
+  opacity: 0.9;
+  transition: opacity 0.3s ease;
+}
+
+.controls:hover,
+.controls:focus-within {
+  opacity: 1;
+}
+
+.controls button {
+  font-family: var(--font);
+  font-size: 0.7rem;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 3px;
+  padding: 0.4rem 0.65rem;
+  cursor: pointer;
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease,
+    background 0.2s ease;
+}
+
+.controls button:hover {
+  color: var(--text);
+  border-color: rgba(232, 232, 234, 0.35);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+@media (max-width: 480px) {
+  .viewport {
+    padding: 1.5rem 1.25rem 4.5rem;
+  }
+
+  .controls {
+    left: 1.25rem;
+    right: 1.25rem;
+    justify-content: center;
+  }
+}
