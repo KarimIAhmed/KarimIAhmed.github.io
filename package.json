@@ -1,0 +1,10 @@
+{
+  "name": "karim-website",
+  "private": true,
+  "scripts": {
+    "build:blog": "node scripts/build-blog.js"
+  },
+  "devDependencies": {
+    "marked": "^15.0.7"
+  }
+}
