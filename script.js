@@ -6,7 +6,7 @@ const MESSAGES = [
   { html: "I'm also learning Spanish and trying to break 1600 in <a href='https://www.chess.com/member/whatischesschess' target='_blank' rel='noopener noreferrer'>Chess</a>" },
   { text: "Exploring my next engineering role. Reach out if you're building something challenging or ambitious" },
   { html: 'You can find me on <a href="https://www.linkedin.com/in/karimiahmed" target="_blank" rel="noopener noreferrer">Linkedin</a> and <a href="https://github.com/karimiahmed" target="_blank" rel="noopener noreferrer">Github</a>'},
-  { html: "Otherwise, my inbox is always open at <a href='mailto:karimdev49@gmail.com' rel='noopener noreferrer'>karimdev49@gmail.com</a>" },
+  { html: "Otherwise, my inbox is always open at: karimdev49 (at symbol) gmail.com" },
 ];
 
 function getTimeGreeting() {
